@@ -28,6 +28,13 @@ describe(covdatadf.winsor)
 mardia(covdatadf.winsor)
 
 
+#NA handling
+is.na(covdatadf.winsor)
+covdatadf.winsor.bez.NA <- na.omit(covdatadf.winsor)
+nrow(covdatadf.winsor.bez.NA)
+
+covdata <- covdatadf.winsor.bez.NA
+
 #model specification
 
 mod.1 ='
@@ -42,7 +49,7 @@ HIGIJENA ~ RIZIK + KORISNOST
 
 mod.est = sem(
   model = mod.1,
-  data = covdatadf,
+  data = covdata,
   
 )
 
@@ -139,10 +146,10 @@ ind_x4_y2 := ind_x4_m1_y2 + ind_x4_m2_y2
 tot_x4_y2 := ind_x4_y2 + c24
 '
 
-res.medtest <- sem(effect.med, covdatadf)
+res.medtest <- sem(effect.med, covdata)
 summary(res.medtest)
 
 #bootstraping
-res.medtest.bootstrap <- sem(effect.med, covdatadf, se = "bootstrap")
+res.medtest.bootstrap <- sem(effect.med, covdata, se = "bootstrap")
 summary(res.medtest.bootstrap)
 
