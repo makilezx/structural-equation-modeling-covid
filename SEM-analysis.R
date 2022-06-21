@@ -89,7 +89,7 @@ SOCIJALNA_DISTANCA ~~ HIGIJENA
 
 # effect decomposition
 
-effect.med.v1 <- '
+effect.med <- '
 # y1 ~ x1
 ind_x1_m1_y1 := a11*b11
 ind_x1_m2_y1 := a21*b12
@@ -139,6 +139,10 @@ ind_x4_y2 := ind_x4_m1_y2 + ind_x4_m2_y2
 tot_x4_y2 := ind_x4_y2 + c24
 '
 
-res.medtest <- sem(effect.med.v1, covdatadf)
+res.medtest <- sem(effect.med, covdatadf)
 summary(res.medtest)
+
+#bootstraping
+res.medtest.bootstrap <- sem(effect.med, covdatadf, se = "bootstrap")
+summary(res.medtest.bootstrap)
 
