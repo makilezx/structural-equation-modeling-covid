@@ -68,7 +68,9 @@ semPaths(
 )
 
 
-
+#####
+######
+#TEST 1
 
 #mediation analysis
 # dependent regression
@@ -86,6 +88,8 @@ KORISNOST ~~ RIZIK
 SOCIJALNA_DISTANCA ~~ HIGIJENA
 
 # effect decomposition
+
+effect.med.v1 <- '
 # y1 ~ x1
 ind_x1_m1_y1 := a11*b11
 ind_x1_m2_y1 := a21*b12
@@ -133,3 +137,8 @@ ind_x4_m1_y2 := a14*b21
 ind_x4_m2_y2 := a24*b22
 ind_x4_y2 := ind_x4_m1_y2 + ind_x4_m2_y2
 tot_x4_y2 := ind_x4_y2 + c24
+'
+
+res.medtest <- sem(effect.med.v1, covdatadf)
+summary(res.medtest)
+
