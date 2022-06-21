@@ -6,9 +6,6 @@ library(psych)
 
 
 #adding dataset
-#data is obtained during the research project 
-#adding dataset
-
 data <- read_spss(file.choose())
 
 colnames(data)
@@ -24,5 +21,10 @@ covdatadf.deskriptivna
 
 #mardia coef. of multivariate normality
 mardia(covdatadf)
+
+#winsor
+covdatadf.winsor <- winsor(covdatadf)
+describe(covdatadf.winsor)
+mardia(covdatadf.winsor)
 
 
