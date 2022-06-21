@@ -28,3 +28,38 @@ describe(covdatadf.winsor)
 mardia(covdatadf.winsor)
 
 
+#model specification
+
+mod.1 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+KORISNOST ~ M.norm + P + N + ASP8.norm 
+
+SOCIJALNA_DISTANCA ~ RIZIK + KORISNOST 
+HIGIJENA ~ RIZIK + KORISNOST 
+'
+
+#model estimate
+
+mod.est = sem(
+  model = mod.1,
+  data = covdatadf,
+  
+)
+
+summary(mod.est,
+        fit.measures = TRUE)
+
+#model plot
+semPaths(
+  object = mod.est,
+  what = "path",
+  whatLabels = "par",
+  style = "ram",
+  layout = "tree",
+  rotation = 2,
+  sizeMan = 7,
+  sizeLat = 7,
+  color = "lightgray",
+  edge.label.cex = 1.2,
+  label.cex = 1.3
+)
