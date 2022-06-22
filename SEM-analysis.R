@@ -24,20 +24,58 @@ covdatadf.deskriptivna
 mardia(covdatadf)
 
 #winsor
-covdatadf.winsor <- winsor(covdatadf)
-describe(covdatadf.winsor)
-mardia(covdatadf.winsor)
+#covdatadf.winsor <- winsor(covdatadf)
+#describe(covdatadf.winsor)
+#mardia(covdatadf.winsor)
+
+covdata <- covdatadf#.winsor
 
 
-#NA handling
-is.na(covdatadf.winsor)
-covdatadf.winsor.bez.NA <- na.omit(covdatadf.winsor)
-nrow(covdatadf.winsor.bez.NA)
-
-covdata <- covdatadf.winsor.bez.NA
+##############
+#model prelm.1
+##############
 
 
+modb1 ='
+RIZIK ~ M.norm + P + N 
+postovanje.mera ~ RIZIK 
+N~~P
+P~~M.norm
+N~~M.norm
+'
+#model estimate
+mod.est = sem(
+  model = modb1,
+  data = covdata,)
 
+summary(mod.est,
+        fit.measures = TRUE)
+
+
+##############
+#model prelm.2
+##############
+
+modb1s ='
+strah ~ M.norm + P + N 
+postovanje.mera ~ strah 
+N~~P
+P~~M.norm
+N~~M.norm
+'
+#model estimate
+mod.est = sem(
+  model = modb1s,
+  data = covdata,)
+
+summary(mod.est,
+        fit.measures = TRUE)
+
+
+############################################################################
+############################################################################
+############################################################################
+############################################################################
 
 #model 2 
 #BEZ KORISNOSTI
