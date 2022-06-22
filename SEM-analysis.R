@@ -5,6 +5,7 @@ library(haven)
 library(psych)
 library(semptools)
 
+
 #adding dataset
 data <- read_spss(file.choose())
 
@@ -35,21 +36,7 @@ nrow(covdatadf.winsor.bez.NA)
 
 covdata <- covdatadf.winsor.bez.NA
 
-#BASEMODEL
 
-mod.1 ='
-RIZIK ~ M.norm + P + N + ASP8.norm 
-KORISNOST ~ M.norm + P + N + ASP8.norm 
-SOCIJALNA_DISTANCA ~ RIZIK + KORISNOST 
-HIGIJENA ~ RIZIK + KORISNOST 
-'
-#model estimate
-mod.est = sem(
-  model = mod.1,
-  data = covdata,)
-
-summary(mod.est,
-        fit.measures = TRUE)
 
 
 #model 2 
@@ -66,8 +53,51 @@ mod.est.2 = sem(
 summary(mod.est.2,
         fit.measures = TRUE)
 
+#model 2 
+#FIX PARAMETRI
+#test
+mod.1 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+KORISNOST ~ M.norm + P + N + ASP8.norm 
+SOCIJALNA_DISTANCA ~ RIZIK + KORISNOST 
+HIGIJENA ~ RIZIK + KORISNOST 
+'
+#model estimate
+mod.est = sem(
+  model = mod.1,
+  data = covdata,)
+
+summary(mod.est,
+        fit.measures = TRUE)
+#!!!LOŠE
+#model 3 
+#BEZ KORISNOSTI
+#BEZ HIGIJENE
+mod.3 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+SOCIJALNA_DISTANCA ~ RIZIK 
+'
 
 
+####
+####
+####ostali modeli
+####
+####
+#BASEMODEL
+mod.1 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+KORISNOST ~ M.norm + P + N + ASP8.norm 
+SOCIJALNA_DISTANCA ~ RIZIK + KORISNOST 
+HIGIJENA ~ RIZIK + KORISNOST 
+'
+#model estimate
+mod.est = sem(
+  model = mod.1,
+  data = covdata,)
+
+summary(mod.est,
+        fit.measures = TRUE)
 #!!!LOŠE
 #model 3 
 #BEZ KORISNOSTI
@@ -83,7 +113,6 @@ mod.est.3 = sem(
 
 summary(mod.est.3,
         fit.measures = TRUE)
-
 
 #!!!BAŠ LOŠE
 #model 4 
@@ -102,6 +131,8 @@ summary(mod.est.4,
 
 
 
+####################
+####################
 ####################
 #model plot
 semPaths(
