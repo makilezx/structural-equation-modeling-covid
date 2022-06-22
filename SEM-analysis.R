@@ -19,7 +19,7 @@ covdatadf.deskriptivna <- describe(covdatadf)
 covdatadf.deskriptivna
 
 
-#mardia coef. of multivariate normality
+#mardia // multivariate normality
 mardia(covdatadf)
 
 #winsor
