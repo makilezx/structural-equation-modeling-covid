@@ -3,7 +3,7 @@ library(psych)
 library(semPlot) 
 library(haven)
 library(psych)
-
+library(semptools)
 
 #adding dataset
 data <- read_spss(file.choose())
@@ -35,30 +35,74 @@ nrow(covdatadf.winsor.bez.NA)
 
 covdata <- covdatadf.winsor.bez.NA
 
-#model specification
+#BASEMODEL
 
 mod.1 ='
 RIZIK ~ M.norm + P + N + ASP8.norm 
 KORISNOST ~ M.norm + P + N + ASP8.norm 
-
 SOCIJALNA_DISTANCA ~ RIZIK + KORISNOST 
 HIGIJENA ~ RIZIK + KORISNOST 
 '
-
 #model estimate
-
 mod.est = sem(
   model = mod.1,
-  data = covdata,
-  
-)
+  data = covdata,)
 
 summary(mod.est,
         fit.measures = TRUE)
 
 
+#model 2 
+#BEZ KORISNOSTI
+mod.2 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+SOCIJALNA_DISTANCA ~ RIZIK  
+HIGIJENA ~ RIZIK
+'
+#model estimate
+mod.est.2 = sem(
+  model = mod.2,
+  data = covdata,)
+summary(mod.est.2,
+        fit.measures = TRUE)
 
 
+
+#!!!LOŠE
+#model 3 
+#BEZ KORISNOSTI
+#BEZ HIGIJENE
+mod.3 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+SOCIJALNA_DISTANCA ~ RIZIK 
+'
+#model estimate
+mod.est.3 = sem(
+  model = mod.3,
+  data = covdata,)
+
+summary(mod.est.3,
+        fit.measures = TRUE)
+
+
+#!!!BAŠ LOŠE
+#model 4 
+#BEZ KORISNOSTI
+#BEZ SOCIJALNE DISTANCE
+mod.4 ='
+RIZIK ~ M.norm + P + N + ASP8.norm 
+HIGIJENA ~ RIZIK
+'
+#model estimate
+mod.est.4 = sem(
+  model = mod.4,
+  data = covdata,)
+summary(mod.est.4,
+        fit.measures = TRUE)
+
+
+
+####################
 #model plot
 semPaths(
   object = mod.est,
@@ -73,6 +117,15 @@ semPaths(
   edge.label.cex = 1.2,
   label.cex = 1.3
 )
+
+p1 <- semPaths(mod.est, whatLabels = "est",
+         sizeMan = 10,
+         edge.label.cex = 1.15,
+         style = "ram", 
+         nCharNodes = 0, nCharEdges = 0)
+
+p2 <- mark_sig(p1, mod.est)
+plot(p2)
 
 
 #####
