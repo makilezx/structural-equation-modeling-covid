@@ -6,18 +6,20 @@ library(psych)
 library(semptools)
 
 
-#adding dataset
+#dataset
 data <- read_spss(file.choose())
 
+#inspect
 colnames(data)
 
+#dataframe
 covdatadf <- as.data.frame(data)
 head(covdatadf)
 
 
 #descriptive statistcs
-covdatadf.deskriptivna <- describe(covdatadf)
-covdatadf.deskriptivna
+describe(covdatadf)
+
 
 
 #mardia // multivariate normality
@@ -28,7 +30,25 @@ mardia(covdatadf)
 #describe(covdatadf.winsor)
 #mardia(covdatadf.winsor)
 
-covdata <- covdatadf#.winsor
+#covdata <- covdatadf.winsor
+
+
+#categorical variables
+
+
+POL <- factor(Pol)
+POL <- factor(x = pOL, levels = 0:1, labels = c("Male", "Female"))
+POL
+
+
+pol
+obrazovanje
+informisanje
+stockpiling
+rizicna grupa
+
+
+
 
 
 ##############
